@@ -1,7 +1,7 @@
 import {applyMiddleware, createStore} from 'redux'
 import './styles.css'
 import {rootReducer} from './redux/rootReducer'
-import {decrement, increment, asyncIncrement, changeTheme} from './redux/actions';
+import {decrement, increment, asyncIncrement, changeTheme, async} from './redux/actions';
 import thunk from 'redux-thunk';
 
 const counter = document.querySelector('#counter')
@@ -11,6 +11,8 @@ const asyncBtn = document.querySelector('#async')
 const themeBtn = document.querySelector('#theme')
 
 let store = createStore(rootReducer, applyMiddleware(thunk))
+
+const buttons = document.querySelectorAll('.btn')
 
 
 addBtn.addEventListener('click', ()=> {
@@ -35,6 +37,7 @@ store.subscribe(()=> {
 
     counter.textContent = state.counter
     document.body.className = state.theme.value
+    document.querySelectorAll('.btn').forEach(btn => btn.disabled = state.async)
 })
 
 store.dispatch({type: 'INIT'})

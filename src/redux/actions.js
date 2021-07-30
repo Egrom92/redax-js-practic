@@ -1,4 +1,4 @@
-import {CHANGE_THEME, DEC, INC} from './boilerplate';
+import {CHANGE_THEME, DEC, INC, ASYNC} from './boilerplate';
 
 const increment = () => {
     return {
@@ -12,8 +12,10 @@ const decrement = () => {
 }
 const asyncIncrement = () => {
     return function (dispatch) {
+        dispatch(async())
         setTimeout(()=> {
             dispatch(increment())
+            dispatch(async())
         }, 1500)
     }
 }
@@ -24,4 +26,10 @@ const changeTheme = (theme) => {
     }
 }
 
-export {increment, decrement, asyncIncrement, changeTheme}
+const async = () => {
+    return {
+        type: ASYNC
+    }
+}
+
+export {increment, decrement, asyncIncrement, changeTheme, async}
